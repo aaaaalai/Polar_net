@@ -1,3 +1,4 @@
+https://doi.org/10.5281/zenodo.19349178
 # Polar-Net
 
 > A modified Polar R-CNN based lane detection framework with CBAM-enhanced backbones.
