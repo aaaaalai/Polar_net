@@ -321,32 +321,8 @@ This makes the repository suitable for research on:
 
 ---
 
-## 13. Suggested Open-Source Cleanup
 
-Before pushing this project to GitHub, it is recommended to additionally prepare:
-
-- `LICENSE`
-- `.gitignore`
-- pre-trained model download links
-- dataset preparation instructions in more detail
-- a short `docs/` folder for figures and qualitative results
-
-A typical `.gitignore` should at least exclude:
-
-```gitignore
-__pycache__/
-*.pyc
-.idea/
-work_dir/
-result/
-view/
-*.pth
-*.pt
-
-```
-
-
-## 14. Acknowledgement
+## 13. Acknowledgement
 
 This project is developed based on the Polar R-CNN framework and further adapted for personal research.
 Thanks to the open-source community for providing the baseline implementation and related resources.
