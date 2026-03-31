@@ -1,0 +1,40 @@
+FROM ubuntu:latest
+LABEL authors="ad"
+
+ENTRYPOINT ["top", "-b"]
+# CUDA 12.1 + cuDNN（devel 版包含 nvcc，便于编译扩展）
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    # 可按显卡改（8.0/8.6/8.9等）；不改也行
+    TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9" \
+    FORCE_CUDA=1
+
+# 基础依赖（编译工具 & OpenCV 运行时）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 python3-pip python3-dev build-essential git ffmpeg \
+    libglib2.0-0 libsm6 libxext6 libxrender-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+# 提前升级构建工具
+RUN python3 -m pip install --upgrade pip setuptools wheel
+
+# PyTorch 2.5.1 (CUDA 12.1 对应) + 其他依赖
+RUN pip install --no-cache-dir \
+    torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# 项目常用 Python 依赖
+RUN pip install --no-cache-dir \
+    numpy==1.26.4 opencv-python-headless==4.10.0.84 pyyaml==6.0.2 \
+    tensorboard==2.16.2 albumentations==1.4.4 prefetch-generator==1.0.3 \
+    tqdm==4.66.4 pybind11==2.13.5
+
+WORKDIR /workspace
+COPY . /workspace
+
+# 尝试编译作者的 NMS 扩展（失败不阻塞）
+RUN pip install -v ./ops/nms_cuda || true
+
+# 默认进入 bash，方便交互/调试
+CMD ["/bin/bash"]
