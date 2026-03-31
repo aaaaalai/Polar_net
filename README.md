@@ -342,26 +342,11 @@ result/
 view/
 *.pth
 *.pt
+
 ```
 
----
 
-## 14. Citation
-
-If this repository helps your research, please cite your corresponding paper or project page here.
-
-```bibtex
-@misc{polarnet_yourname,
-  title={Polar-Net: A Modified Polar R-CNN Framework for Lane Detection},
-  author={Your Name},
-  year={2026},
-  howpublished={GitHub repository}
-}
-```
-
----
-
-## 15. Acknowledgement
+## 14. Acknowledgement
 
 This project is developed based on the Polar R-CNN framework and further adapted for personal research.
 Thanks to the open-source community for providing the baseline implementation and related resources.
